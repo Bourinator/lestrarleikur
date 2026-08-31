@@ -202,12 +202,13 @@
                        100%{transform:scale(0) rotate(-15deg);opacity:0}}
   @keyframes burtAnim{to{transform:translateX(70vw) translateY(-25vh) rotate(25deg);opacity:0}}
   @keyframes hverfaAnim{to{transform:scale(.15) rotate(380deg);opacity:0}}
-  .birtast{animation:birtast .45s cubic-bezier(.34,1.56,.64,1) backwards}
-  .koma   {animation:koma 1s cubic-bezier(.22,1,.36,1) backwards}
-  .springa{animation:springaAnim .8s ease-in forwards}
-  .borda  {animation:bordaAnim .8s ease-in forwards}
-  .burt   {animation:burtAnim 1s ease-in forwards}
-  .hverfa {animation:hverfaAnim .9s ease-in forwards}
+  /* afmarkað við sviðið svo .burt rekist ekki á krossuðu hlutina í Teldu hlutina */
+  #svidHlutir .birtast{animation:birtast .45s cubic-bezier(.34,1.56,.64,1) backwards}
+  #svidHlutir .koma   {animation:koma 1s cubic-bezier(.22,1,.36,1) backwards}
+  #svidHlutir .springa{animation:springaAnim .8s ease-in forwards}
+  #svidHlutir .borda  {animation:bordaAnim .8s ease-in forwards}
+  #svidHlutir .burt   {animation:burtAnim 1s ease-in forwards}
+  #svidHlutir .hverfa {animation:hverfaAnim .9s ease-in forwards}
 
   /* ---- leikur 3: staerdfraedi ---- */
   #stika3{position:fixed;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;
