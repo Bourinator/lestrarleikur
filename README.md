@@ -11,7 +11,7 @@ Opnast á http://localhost:8080
 
 ## Leikirnir
 
-Á valmyndinni velur hann leik (eða ýtir á `1`–`6`):
+Á valmyndinni velur hann leik (eða ýtir á `1`–`7`):
 
 **1. Finndu stafinn** — mynd birtist, hann slær inn stafinn. Þrjú borð:
 
@@ -24,18 +24,23 @@ myndir. Hann velur myndina sem byrjar á þeim staf, með tökkunum `1`–`4` e�
 því að smella. Undir stafnum sést alltaf parið `B b` svo hann tengi stóra og litla
 stafinn saman.
 
+**3. Lestu orðið** — heilt orð birtist og fjórar myndir. Hann les orðið og velur
+myndina sem passar. A.m.k. ein truflunarmynd byrjar á sama staf og orðið, svo það
+dugir ekki að lesa bara fyrsta stafinn. „Haltu inni fyrir STÓRA STAFI“-takkinn
+sýnir orðið með hástöfum á meðan honum er haldið inni, eins og í leik 1.
+
 ### Stærðfræði
 
-**3. Plús og mínus** — venjuleg dæmi, `3 + 2 = ?`, og hann velur svarið úr
+**4. Plús og mínus** — venjuleg dæmi, `3 + 2 = ?`, og hann velur svarið úr
 tölutökkunum fyrir neðan.
 
-**4. Teldu hlutina** — sama dæmi en með myndum: `🍎🍎🍎 ➕ 🍎🍎`. Í mínusdæmum
+**5. Teldu hlutina** — sama dæmi en með myndum: `🍎🍎🍎 ➕ 🍎🍎`. Í mínusdæmum
 birtast allir hlutirnir og þeir sem dragast frá eru krossaðir út, svo hann sjái
 frádráttinn í stað þess að þurfa að ímynda sér hann.
 
-**5. Hvað vantar?** — `4 + ? = 7`. Hann finnur töluna sem vantar í miðjuna.
+**6. Hvað vantar?** — `4 + ? = 7`. Hann finnur töluna sem vantar í miðjuna.
 
-**6. Hvað gerðist?** — hlutirnir birtast einn og einn á sviðinu, svo gerist eitthvað:
+**7. Hvað gerðist?** — hlutirnir birtast einn og einn á sviðinu, svo gerist eitthvað:
 blöðrur springa 💥, epli eru borðuð 😋, fuglar fljúga burt 💨, stjörnur slokkna ✨ —
 eða fleiri bætast við. Hlutirnir sem fara verða gráir og krossaðir út (eins og í
 „Teldu hlutina") svo frádrátturinn sést áfram, og viðbót kemur í sérmerktan grænan
@@ -50,7 +55,7 @@ sömu vitlausu töluna aftur.
 
 ## Stýring
 
-- Leikur 1: stafatakkar = svara. Leikur 2: `1`–`4` = velja mynd.
+- Leikur 1: stafatakkar = svara. Leikir 2–3: `1`–`4` = velja mynd.
 - Bilstöng = heyra orðið aftur (eða smella á myndina)
 - Enter/bilstöng = halda áfram á verðlaunaskjá
 - `Esc` eða 🏠 = aftur í valmyndina

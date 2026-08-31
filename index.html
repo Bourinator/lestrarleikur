@@ -114,18 +114,18 @@
     outline:5px solid #fff;outline-offset:3px}
 
   #stafaval.hastafir .stafatakki{text-transform:uppercase}
-  #hastafirTakki{
+  .hastTakki{
     font:inherit;font-size:clamp(.95rem,2.4vw,1.2rem);font-weight:bold;color:var(--dokkt);
     background:#fff;border:3px solid var(--fjolublar);border-radius:999px;
     padding:.55em 1.4em;cursor:pointer;margin:-1.4rem 0 2.4rem;
     box-shadow:0 5px 0 #cbbdf0;transition:transform .08s, box-shadow .08s, background .12s;
     -webkit-user-select:none;user-select:none;touch-action:none;
   }
-  #hastafirTakki .synid{background:#f0eafd;border-radius:.5em;padding:.1em .5em;letter-spacing:.05em;white-space:nowrap}
-  #hastafirTakki.virkur{
+  .hastTakki .synid{background:#f0eafd;border-radius:.5em;padding:.1em .5em;letter-spacing:.05em;white-space:nowrap}
+  .hastTakki.virkur{
     background:var(--fjolublar);color:#fff;transform:translateY(5px);box-shadow:0 0 0 #cbbdf0;
   }
-  #hastafirTakki.virkur .synid{background:rgba(255,255,255,.25)}
+  .hastTakki.virkur .synid{background:rgba(255,255,255,.25)}
 
   /* ---- limmidasafn ---- */
   #hilla{position:fixed;bottom:0;left:0;right:0;z-index:3;display:flex;flex-wrap:wrap;
@@ -253,6 +253,9 @@
   #storiStafur{font-size:clamp(5rem,16vh,9rem);font-weight:bold;line-height:1.05;
     background:linear-gradient(180deg,var(--fjolublar),var(--bleikur));
     -webkit-background-clip:text;background-clip:text;color:transparent}
+  #stafspjald.ordham{padding:1.2rem 2rem 1.4rem}
+  #stafspjald.ordham #storiStafur{font-size:clamp(2.2rem,min(10vh,11vw),4.6rem);letter-spacing:.04em}
+  #stafspjald.ordham #baedi{display:none}
   #baedi{font-size:1.3rem;opacity:.45;letter-spacing:.3em}
   #hjalp2{font-size:clamp(1rem,2.6vw,1.35rem);opacity:.7;min-height:1.6em}
   #valkostir{margin-bottom:3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:56rem;width:100%}
@@ -308,30 +311,36 @@
       <div class="nafn">Finndu myndina</div>
       <div class="lysing">Stafur birtist — veldu myndina sem byrjar á honum.</div>
     </button>
+    <button class="leikjaspjald" id="velja3">
+      <span class="nr2">3</span>
+      <div class="em"><b>bíll</b> → 🚗</div>
+      <div class="nafn">Lestu orðið</div>
+      <div class="lysing">Orð birtist — lestu það og veldu réttu myndina.</div>
+    </button>
   </div>
 
   <div class="flokkur">🔢 Stærðfræði</div>
   <div id="leikjaval2">
-    <button class="leikjaspjald" id="velja3">
-      <span class="nr2">3</span>
+    <button class="leikjaspjald" id="velja4">
+      <span class="nr2">4</span>
       <div class="em">3 + 2 = <b>?</b></div>
       <div class="nafn">Plús og mínus</div>
       <div class="lysing">Reiknaðu dæmið og veldu rétta töluna.</div>
     </button>
-    <button class="leikjaspjald" id="velja4">
-      <span class="nr2">4</span>
+    <button class="leikjaspjald" id="velja5">
+      <span class="nr2">5</span>
       <div class="em">🍎🍎 ➕ 🍎</div>
       <div class="nafn">Teldu hlutina</div>
       <div class="lysing">Teldu myndirnar og finndu svarið.</div>
     </button>
-    <button class="leikjaspjald" id="velja5">
-      <span class="nr2">5</span>
+    <button class="leikjaspjald" id="velja6">
+      <span class="nr2">6</span>
       <div class="em">4 + <b>?</b> = 7</div>
       <div class="nafn">Hvað vantar?</div>
       <div class="lysing">Finndu töluna sem vantar í dæmið.</div>
     </button>
-    <button class="leikjaspjald" id="velja6">
-      <span class="nr2">6</span>
+    <button class="leikjaspjald" id="velja7">
+      <span class="nr2">7</span>
       <div class="em">🎈🎈🎈 <b>💥</b></div>
       <div class="nafn">Hvað gerðist?</div>
       <div class="lysing">Horfðu á það gerast — teldu svo það sem eftir er.</div>
@@ -355,6 +364,7 @@
   </div>
   <div id="hjalp2">Hvaða mynd byrjar á þessum staf?</div>
   <div id="valkostir"></div>
+  <button id="hastafirTakki2" class="hastTakki" hidden>⬆️ Haltu inni fyrir <b>STÓRA STAFI</b> &nbsp;<span class="synid">a → A</span></button>
 </div>
 
 <!-- LEIKUR 4: sagan -->
@@ -406,7 +416,7 @@
   </div>
   <div id="hjalp"></div>
   <div id="stafaval"></div>
-  <button id="hastafirTakki">⬆️ Haltu inni fyrir <b>STÓRA STAFI</b> &nbsp;<span class="synid">a → A</span></button>
+  <button id="hastafirTakki" class="hastTakki">⬆️ Haltu inni fyrir <b>STÓRA STAFI</b> &nbsp;<span class="synid">a → A</span></button>
 </div>
 
 <div id="hilla"></div>
@@ -712,16 +722,19 @@ function nyttBord(){
   $('#framvindaFyllt').style.width = '0%';
 }
 
-/* ============ LEIKUR 2 — finndu myndina ============ */
+/* ============ LEIKUR 2 — finndu myndina / lestu orðið ============ */
 let stig2 = 0, rod2 = 0, iBordi2 = 0, laest2 = false;
-let rettur2 = null, valListi = [];
+let rettur2 = null, valListi = [], hamur2 = 'stafur';
 const THROF2 = 10;
 
-function byrjaLeik2(){
+function byrjaLeik2(h){
+  hamur2 = h;
   stig2 = 0; rod2 = 0; iBordi2 = 0;
   $('#stigin2').textContent = '⭐ 0';
   $('#rodin2').textContent  = '🔥 0';
   $('#framvindaFyllt2').style.width = '0%';
+  $('#hastafirTakki2').hidden = (h !== 'ord');
+  setjaHastafi2(false);
   naestiStafur();
 }
 
@@ -730,22 +743,37 @@ function naestiStafur(){
   rettur2 = ORD[Math.floor(Math.random()*ORD.length)];
   const upphaf = [...rettur2.o][0].toLowerCase();
 
-  const adrir = stokka(ORD.filter(o=>[...o.o][0].toLowerCase() !== upphaf));
-  const notadir = new Set([upphaf]);
-  const truflanir = [];
-  for(const o of adrir){
-    const b = [...o.o][0].toLowerCase();
-    if(notadir.has(b)) continue;
-    notadir.add(b); truflanir.push(o);
-    if(truflanir.length === 3) break;
+  let truflanir;
+  if(hamur2 === 'ord'){
+    /* a.m.k. ein truflun byrjar á sama staf, svo það þurfi að lesa allt orðið */
+    const somu  = stokka(ORD.filter(o=>o !== rettur2 && [...o.o][0].toLowerCase() === upphaf));
+    const adrir = stokka(ORD.filter(o=>o !== rettur2 && [...o.o][0].toLowerCase() !== upphaf));
+    truflanir = somu.slice(0,1).concat(adrir).slice(0,3);
+  } else {
+    const adrir = stokka(ORD.filter(o=>[...o.o][0].toLowerCase() !== upphaf));
+    const notadir = new Set([upphaf]);
+    truflanir = [];
+    for(const o of adrir){
+      const b = [...o.o][0].toLowerCase();
+      if(notadir.has(b)) continue;
+      notadir.add(b); truflanir.push(o);
+      if(truflanir.length === 3) break;
+    }
   }
   valListi = stokka([rettur2, ...truflanir]);
 
-  const stor = Math.random() < .5;
-  const bokstafur = stor ? upphaf.toUpperCase() : upphaf;
-  $('#storiStafur').textContent = bokstafur;
-  $('#baedi').textContent = upphaf.toUpperCase() + ' ' + upphaf;
-  $('#hjalp2').textContent = 'Hvaða mynd byrjar á ' + (stor ? 'stórum' : 'litlum') + ' ' + bokstafur + '?';
+  if(hamur2 === 'ord'){
+    $('#stafspjald').classList.add('ordham');
+    synaOrd2();
+    $('#hjalp2').textContent = 'Lestu orðið — hvaða mynd passar?';
+  } else {
+    $('#stafspjald').classList.remove('ordham');
+    const stor = Math.random() < .5;
+    const bokstafur = stor ? upphaf.toUpperCase() : upphaf;
+    $('#storiStafur').textContent = bokstafur;
+    $('#baedi').textContent = upphaf.toUpperCase() + ' ' + upphaf;
+    $('#hjalp2').textContent = 'Hvaða mynd byrjar á ' + (stor ? 'stórum' : 'litlum') + ' ' + bokstafur + '?';
+  }
 
   const box = $('#valkostir');
   box.innerHTML = '';
@@ -757,6 +785,21 @@ function naestiStafur(){
     b.onclick = ()=>velja(i);
     box.appendChild(b);
   });
+}
+
+/* halda inni takkanum => orðið birtist með hástöfum */
+let hastafir2 = false;
+function synaOrd2(){
+  if(hamur2 !== 'ord' || !rettur2) return;
+  $('#storiStafur').textContent = hastafir2 ? rettur2.o.toUpperCase() : rettur2.o;
+}
+function setjaHastafi2(a){
+  hastafir2 = a;
+  const t = $('#hastafirTakki2');
+  t.classList.toggle('virkur', a);
+  const s = t.querySelector('.synid');
+  if(s) s.textContent = a ? 'A → a' : 'a → A';
+  synaOrd2();
 }
 
 function velja(i){
@@ -772,8 +815,10 @@ function velja(i){
     $('#stigin2').textContent = '⭐ ' + stig2;
     $('#rodin2').textContent  = '🔥 ' + rod2;
     $('#framvindaFyllt2').style.width = Math.min(100,(iBordi2/THROF2)*100) + '%';
-    $('#hjalp2').textContent = rettur2.o.charAt(0).toUpperCase() + rettur2.o.slice(1) +
-                               ' byrjar á ' + [...rettur2.o][0].toUpperCase() + '! 🎉';
+    $('#hjalp2').textContent = (hamur2 === 'ord')
+      ? 'Rétt — þetta er ' + rettur2.o + '! 🎉'
+      : rettur2.o.charAt(0).toUpperCase() + rettur2.o.slice(1) +
+        ' byrjar á ' + [...rettur2.o][0].toUpperCase() + '! 🎉';
     if(stig2 % 3 === 0) faLimmida();
     tala(rettur2.o);
     if(iBordi2 >= THROF2){
@@ -794,8 +839,10 @@ function velja(i){
     $('#rodin2').textContent = '🔥 0';
     spjold[i].classList.add('rangt2','syna');
     spjold[i].onclick = null;
-    $('#hjalp2').textContent = val.o.charAt(0).toUpperCase() + val.o.slice(1) + ' byrjar á ' +
-                               [...val.o][0].toUpperCase() + ' — reyndu aftur! 🙂';
+    $('#hjalp2').textContent = (hamur2 === 'ord')
+      ? 'Þetta er ' + val.o + ' — reyndu aftur! 🙂'
+      : val.o.charAt(0).toUpperCase() + val.o.slice(1) + ' byrjar á ' +
+        [...val.o][0].toUpperCase() + ' — reyndu aftur! 🙂';
   }
 }
 
@@ -1160,11 +1207,12 @@ function lokaYfir(){
 $('#byrjaTakki').addEventListener('click', byrja);
 $('#yfirTakki').addEventListener('click', lokaYfir);
 $('#velja1').onclick = ()=>{ hljodvel(); syna('leikur');  bordNr = 0; stig = 0; rod = 0; byrjaBord(); };
-$('#velja2').onclick = ()=>{ hljodvel(); syna('leikur2'); byrjaLeik2(); };
-$('#velja3').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('daemi');  };
-$('#velja4').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('myndir'); };
-$('#velja5').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('vantar'); };
-$('#velja6').onclick = ()=>{ hljodvel(); syna('leikur4'); byrjaLeik4(); };
+$('#velja2').onclick = ()=>{ hljodvel(); syna('leikur2'); byrjaLeik2('stafur'); };
+$('#velja3').onclick = ()=>{ hljodvel(); syna('leikur2'); byrjaLeik2('ord'); };
+$('#velja4').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('daemi');  };
+$('#velja5').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('myndir'); };
+$('#velja6').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('vantar'); };
+$('#velja7').onclick = ()=>{ hljodvel(); syna('leikur4'); byrjaLeik4(); };
 $('#tilbakaMerki3').onclick = opnaValmynd;
 $('#tilbakaMerki4').onclick = ()=>{ sogumerki++; opnaValmynd(); };
 $('#sjaAftur').onclick = e=>{ e.currentTarget.blur(); if(saga4) spilaSogu(); };
@@ -1186,7 +1234,7 @@ document.addEventListener('keydown', e=>{
   }
   /* valmynd: 1 eða 2 velur leik */
   if(!$('#valmynd').classList.contains('falin')){
-    ['1','2','3','4','5','6'].forEach((k, i)=>{ if(e.key === k) $('#velja' + (i+1)).click(); });
+    ['1','2','3','4','5','6','7'].forEach((k, i)=>{ if(e.key === k) $('#velja' + (i+1)).click(); });
     return;
   }
   if(e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1227,9 +1275,13 @@ const hastTakki = $('#hastafirTakki');
 hastTakki.addEventListener('pointerdown', e=>{ e.preventDefault(); setjaHastafi(true); });
 ['pointerup','pointerleave','pointercancel'].forEach(v=>
   hastTakki.addEventListener(v, ()=>setjaHastafi(false)));
-document.addEventListener('keydown', e=>{ if(e.key === 'Shift') setjaHastafi(true); });
-document.addEventListener('keyup',   e=>{ if(e.key === 'Shift') setjaHastafi(false); });
-window.addEventListener('blur', ()=>setjaHastafi(false));
+const hastTakki2 = $('#hastafirTakki2');
+hastTakki2.addEventListener('pointerdown', e=>{ e.preventDefault(); setjaHastafi2(true); });
+['pointerup','pointerleave','pointercancel'].forEach(v=>
+  hastTakki2.addEventListener(v, ()=>setjaHastafi2(false)));
+document.addEventListener('keydown', e=>{ if(e.key === 'Shift'){ setjaHastafi(true); setjaHastafi2(true); } });
+document.addEventListener('keyup',   e=>{ if(e.key === 'Shift'){ setjaHastafi(false); setjaHastafi2(false); } });
+window.addEventListener('blur', ()=>{ setjaHastafi(false); setjaHastafi2(false); });
 
 myndEl.addEventListener('click', ()=>{ if(nuOrd) tala(nuOrd.o); });
 </script>
