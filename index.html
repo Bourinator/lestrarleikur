@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffe9f4">
 <title>Stafaleikur</title>
 <style>
   :root{
@@ -17,14 +18,21 @@
     background:linear-gradient(160deg,#ffe9f4 0%,#e6f3ff 45%,#e9fff4 100%);
     overflow:hidden;
     -webkit-user-select:none;user-select:none;
+    touch-action:manipulation;              /* ekkert double-tap zoom á síma */
+    -webkit-tap-highlight-color:transparent;
+    -webkit-touch-callout:none;
   }
   #himinn{position:fixed;inset:0;pointer-events:none;z-index:0}
   .sky{position:absolute;font-size:3rem;opacity:.35;animation:sveima linear infinite}
   @keyframes sveima{from{transform:translateX(-15vw)}to{transform:translateX(115vw)}}
 
+  /* justify-content:center + overflow klippir toppinn af á litlum skjám,
+     svo teygjanleg ::before/::after miðja efnið í staðinn */
   .skjar{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:1rem;padding:3.6rem 1rem 1rem;text-align:center;
+    align-items:center;justify-content:flex-start;gap:1rem;padding:3.6rem 1rem 1rem;text-align:center;
     overflow-y:auto}
+  .skjar::before,.skjar::after{content:'';flex:1 0 0;min-height:0}
+  @supports(height:100dvh){.skjar{height:100dvh}}
   .falin{display:none !important}
 
   h1{font-size:clamp(2.5rem,8vw,5rem);margin:0;line-height:1;
@@ -99,7 +107,7 @@
     box-shadow:0 6px 0 rgba(0,0,0,.22), 0 8px 18px rgba(0,0,0,.14);
     transition:transform .08s, box-shadow .08s, opacity .2s;
   }
-  .stafatakki:hover{transform:translateY(-3px)}
+  @media(hover:hover){.stafatakki:hover{transform:translateY(-3px)}}
   .stafatakki:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.22)}
   .stafatakki.rangur{opacity:.28;pointer-events:none;transform:none;box-shadow:none}
   .stafatakki.visbending{animation:pulsa .7s ease-in-out infinite;
@@ -113,7 +121,7 @@
     box-shadow:0 5px 0 #cbbdf0;transition:transform .08s, box-shadow .08s, background .12s;
     -webkit-user-select:none;user-select:none;touch-action:none;
   }
-  #hastafirTakki .synid{background:#f0eafd;border-radius:.5em;padding:.1em .5em;letter-spacing:.05em}
+  #hastafirTakki .synid{background:#f0eafd;border-radius:.5em;padding:.1em .5em;letter-spacing:.05em;white-space:nowrap}
   #hastafirTakki.virkur{
     background:var(--fjolublar);color:#fff;transform:translateY(5px);box-shadow:0 0 0 #cbbdf0;
   }
@@ -136,7 +144,7 @@
   .leikjaspjald{font:inherit;color:inherit;text-align:center;cursor:pointer;
     background:#fff;border:4px solid transparent;border-radius:2rem;padding:1.6rem 1.4rem;width:17rem;
     box-shadow:0 12px 28px rgba(0,0,0,.12);transition:.15s}
-  .leikjaspjald:hover{transform:translateY(-6px);border-color:var(--fjolublar)}
+  @media(hover:hover){.leikjaspjald:hover{transform:translateY(-6px);border-color:var(--fjolublar)}}
   .leikjaspjald .em{font-size:2.8rem;line-height:1.2}
   .leikjaspjald .nafn{font-size:1.5rem;font-weight:bold;margin:.4rem 0 .3rem;color:var(--fjolublar)}
   .leikjaspjald .lysing{font-size:.95rem;opacity:.65;line-height:1.35}
@@ -201,7 +209,7 @@
   #daemiMyndir .burt{opacity:.28;position:relative;filter:grayscale(1)}
   #daemiMyndir .burt::after{content:'✖';position:absolute;inset:0;display:flex;align-items:center;
     justify-content:center;color:var(--bleikur);font-size:.9em;opacity:.9;filter:none}
-  #daemiTexti{font-size:clamp(2.4rem,9vh,4.4rem);font-weight:bold;line-height:1.1;letter-spacing:.03em}
+  #daemiTexti{font-size:clamp(1.8rem,min(9vh,10vw),4.4rem);font-weight:bold;line-height:1.1;letter-spacing:.03em;white-space:nowrap}
   #daemiTexti .spurn{color:var(--bleikur)}
   #hjalp3{font-size:clamp(1rem,2.6vw,1.35rem);opacity:.7;min-height:1.6em}
   #tolur{display:grid;grid-template-columns:repeat(auto-fit,minmax(3.4rem,1fr));gap:.5rem;
@@ -211,7 +219,7 @@
     border:none;border-radius:1rem;padding:.5em 0;cursor:pointer;
     box-shadow:0 6px 0 rgba(0,0,0,.22),0 8px 18px rgba(0,0,0,.14);
     transition:transform .08s,box-shadow .08s,opacity .2s}
-  .tolutakki:hover{transform:translateY(-3px)}
+  @media(hover:hover){.tolutakki:hover{transform:translateY(-3px)}}
   .tolutakki:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.22)}
   .tolutakki.rangur{opacity:.28;pointer-events:none;transform:none;box-shadow:none}
   .tolutakki.rett3{animation:snua .6s ease;outline:5px solid #fff;outline-offset:3px}
@@ -235,7 +243,7 @@
   .valkostur{position:relative;background:#fff;border:4px solid transparent;border-radius:1.6rem;
     padding:1rem .4rem;cursor:pointer;font:inherit;transition:.15s;
     box-shadow:0 10px 22px rgba(0,0,0,.11)}
-  .valkostur:hover{transform:translateY(-6px);border-color:var(--blar)}
+  @media(hover:hover){.valkostur:hover{transform:translateY(-6px);border-color:var(--blar)}}
   .valkostur .emj{font-size:clamp(3rem,9vh,5rem);line-height:1.1;display:block}
   .valkostur .nr{position:absolute;top:.5rem;left:.6rem;background:var(--fjolublar);color:#fff;
     width:1.8rem;height:1.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -439,7 +447,11 @@ const myndEl=$('#mynd'), ordEl=$('#ord'), hjalpEl=$('#hjalp'), spjaldEl=$('#spja
 
 /* ============ HLJÓÐ ============ */
 let ac = null;
-function hljodvel(){ if(!ac) ac = new (window.AudioContext||window.webkitAudioContext)(); return ac; }
+function hljodvel(){
+  if(!ac) ac = new (window.AudioContext||window.webkitAudioContext)();
+  if(ac.state === 'suspended') ac.resume();   /* iOS byrjar oft í biðstöðu */
+  return ac;
+}
 function tonn(f, t0, lengd, gerd='sine', styrkur=.18){
   const a = hljodvel(), o = a.createOscillator(), g = a.createGain();
   o.type = gerd; o.frequency.value = f;
@@ -460,11 +472,12 @@ const hlj = {
 /* ============ TAL ============ */
 let raddir = [], islRodd = null;
 function finnaRodd(){
+  if(!('speechSynthesis' in window)) return;
   raddir = speechSynthesis.getVoices();
   islRodd = raddir.find(r=>/^is/i.test(r.lang)) || null;
 }
 finnaRodd();
-speechSynthesis.onvoiceschanged = finnaRodd;
+if('speechSynthesis' in window) speechSynthesis.onvoiceschanged = finnaRodd;
 function tala(texti, hradi=.85){
   if(!('speechSynthesis' in window) || !islRodd) return;
   speechSynthesis.cancel();
@@ -1151,7 +1164,7 @@ document.addEventListener('keydown', e=>{ if(e.key === 'Shift') setjaHastafi(tru
 document.addEventListener('keyup',   e=>{ if(e.key === 'Shift') setjaHastafi(false); });
 window.addEventListener('blur', ()=>setjaHastafi(false));
 
-myndEl.addEventListener('click', ()=>tala(nuOrd.o));
+myndEl.addEventListener('click', ()=>{ if(nuOrd) tala(nuOrd.o); });
 </script>
 </body>
 </html>
