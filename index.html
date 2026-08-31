@@ -169,6 +169,23 @@
   #svidHlutir{display:flex;flex-wrap:wrap;gap:.25em;justify-content:center;align-items:center;
     font-size:clamp(2rem,7vh,3.6rem)}
   #svidHlutir span{display:inline-block;will-change:transform,opacity}
+  .svidhopur{display:flex;flex-wrap:wrap;gap:.25em;justify-content:center;align-items:center;
+    padding:.12em .25em;border-radius:.6em}
+  .svidhopur.nyr{background:#e6f8ef;box-shadow:inset 0 0 0 3px #bfe9d5}
+  .svidadgerd{font-weight:bold;color:var(--fjolublar);font-size:1.1em;padding:0 .15em}
+  .svidpar{display:flex;align-items:center;gap:.25em;flex-wrap:wrap;justify-content:center}
+  .farinn{opacity:.3;filter:grayscale(1);position:relative}
+  .farinn::after{content:'✖';position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:var(--bleikur);font-size:.8em;opacity:.9;filter:none}
+  #jafnaRod{display:flex;align-items:center;justify-content:center;gap:.9rem;min-height:2.4rem}
+  #jafna{font-size:clamp(1.5rem,min(6vh,8vw),2.4rem);font-weight:bold;letter-spacing:.02em;
+    white-space:nowrap}
+  #jafna span{display:inline-block;margin:0 .12em;animation:skella .3s ease}
+  #jafna .spurn{color:var(--bleikur)}
+  #sjaAftur{font:inherit;font-size:clamp(.9rem,2.4vw,1.1rem);font-weight:bold;color:var(--fjolublar);
+    background:#fff;border:3px solid var(--fjolublar);border-radius:999px;padding:.3em .9em;
+    cursor:pointer;box-shadow:0 4px 0 #cbbdf0;white-space:nowrap}
+  #sjaAftur:active{transform:translateY(3px);box-shadow:0 1px 0 #cbbdf0}
   #saga{font-size:clamp(1.2rem,3.4vw,1.9rem);font-weight:bold;color:var(--fjolublar);min-height:1.5em}
   #hjalp4{font-size:clamp(1rem,2.6vw,1.35rem);opacity:.7;min-height:1.6em}
   #tolur4{display:grid;grid-template-columns:repeat(auto-fit,minmax(3.4rem,1fr));gap:.5rem;
@@ -350,6 +367,7 @@
   </div>
 
   <div id="svid"><div id="svidHlutir"></div></div>
+  <div id="jafnaRod"><div id="jafna">&nbsp;</div><button id="sjaAftur" class="falin">🔁 Sjá aftur</button></div>
   <div id="saga">&nbsp;</div>
   <div id="hjalp4">&nbsp;</div>
   <div id="tolur4"></div>
@@ -954,15 +972,18 @@ function byrjaLeik4(){
   nySaga();
 }
 
-async function nySaga(){
-  const merki = ++sogumerki;
-  laest4 = true;
-  const svid = $('#svidHlutir');
-  svid.innerHTML = '';
-  $('#tolur4').innerHTML = '';
-  $('#saga').innerHTML = '&nbsp;';
-  $('#hjalp4').textContent = 'Fylgstu með…';
+let saga4 = null;   /* {sv, plus, a, b} — geymt svo hægt sé að sjá söguna aftur */
 
+function jafnaBaeta(t, spurn){
+  const j = $('#jafna');
+  if(!j.querySelector('span')) j.innerHTML = '';
+  const sp = document.createElement('span');
+  if(spurn) sp.className = 'spurn';
+  sp.textContent = t;
+  j.appendChild(sp);
+}
+
+function nySaga(){
   const sv = SOGUR[Math.floor(Math.random() * SOGUR.length)];
   const plus = Math.random() < .5;
   let a, b;
@@ -976,38 +997,70 @@ async function nySaga(){
     b = 2 + Math.floor(Math.random() * (a - 2));              /* 2..a-1   */
     svar4 = a - b;
   }
+  saga4 = {sv, plus, a, b};
+  spilaSogu();
+}
 
-  /* 1. hlutirnir birtast einn og einn */
+async function spilaSogu(){
+  const merki = ++sogumerki;
+  const {sv, plus, a, b} = saga4;
+  laest4 = true;
+  const svid = $('#svidHlutir');
+  svid.innerHTML = '';
+  $('#tolur4').innerHTML = '';
+  $('#jafna').innerHTML = '&nbsp;';
+  $('#saga').innerHTML = '&nbsp;';
+  $('#sjaAftur').classList.add('falin');
+  $('#hjalp4').textContent = 'Fylgstu með…';
+
+  /* 1. hlutirnir birtast einn og einn í fyrsta hópnum */
+  const hopA = document.createElement('div');
+  hopA.className = 'svidhopur';
+  svid.appendChild(hopA);
   for(let i = 0; i < a; i++){
     if(merki !== sogumerki) return;
     const sp = document.createElement('span');
     sp.className = 'birtast';
     sp.textContent = sv.h;
-    svid.appendChild(sp);
+    hopA.appendChild(sp);
     hlj.plopp();
     await bida(150);
   }
   if(merki !== sogumerki) return;
+  jafnaBaeta(a);
   $('#hjalp4').textContent = a + ' ' + sv.nafn + '!';
-  await bida(700);
+  await bida(800);
   if(merki !== sogumerki) return;
 
   /* 2. eitthvað gerist */
   if(plus){
+    const badge = document.createElement('div');
+    badge.className = 'svidadgerd birtast';
+    badge.textContent = '+';
+    const hopB = document.createElement('div');
+    hopB.className = 'svidhopur nyr';
+    const par = document.createElement('div');   /* plúsinn brotnar með hópnum */
+    par.className = 'svidpar';
+    par.appendChild(badge);
+    par.appendChild(hopB);
+    svid.appendChild(par);
+    jafnaBaeta('+');
     $('#saga').textContent = '➕ ' + b + ' ' + sv.nafn + ' bættust við!';
     for(let i = 0; i < b; i++){
       const sp = document.createElement('span');
       sp.className = 'koma';
       sp.textContent = sv.h;
-      svid.appendChild(sp);
+      hopB.appendChild(sp);
       hlj.plopp();
       await bida(220);
       if(merki !== sogumerki) return;
     }
-    $('#hjalp4').textContent = 'Hvað er samtals?';
+    jafnaBaeta(b);
+    $('#hjalp4').textContent = 'Teldu alla saman!';
   } else {
+    jafnaBaeta('−');
     $('#saga').textContent = sv.tak + ' ' + b + ' ' + sv.nafn + ' ' + sv.burt;
-    const born = [...svid.children];
+    const born = [...hopA.children];
     for(let i = 0; i < b; i++){
       const sp = born[born.length - 1 - i];
       if(!sp) continue;
@@ -1019,14 +1072,24 @@ async function nySaga(){
     }
     await bida(700);
     if(merki !== sogumerki) return;
-    born.slice(born.length - b).forEach(sp => sp.remove());
-    $('#hjalp4').textContent = 'Hvað er eftir?';
+    /* þeir sem fóru verða gráir og krossaðir í stað þess að hverfa,
+       svo frádrátturinn sjáist áfram á sviðinu */
+    born.slice(born.length - b).forEach(sp=>{
+      sp.className = 'farinn';
+      sp.textContent = sv.h;
+    });
+    jafnaBaeta(b);
+    $('#hjalp4').textContent = 'Teldu þá sem eru eftir!';
   }
 
-  /* 3. svarið */
+  /* 3. dæmið klárast og svarað */
+  await bida(500);
   if(merki !== sogumerki) return;
+  jafnaBaeta('=');
+  jafnaBaeta('?', true);
   laest4 = false;
   byggjaTolur('#tolur4', hamark4, svaraSogu);
+  $('#sjaAftur').classList.remove('falin');
 }
 
 function svaraSogu(n){
@@ -1042,6 +1105,9 @@ function svaraSogu(n){
     $('#rodin4').textContent  = '🔥 ' + rod4;
     $('#framvindaFyllt4').style.width = Math.min(100, (iBordi4 / THROF4) * 100) + '%';
     $('#hjalp4').textContent = 'Rétt — ' + n + '! 🎉';
+    const q = $('#jafna').querySelector('.spurn');
+    if(q) q.textContent = n;
+    $('#sjaAftur').classList.add('falin');
     if(stig4 % 3 === 0) faLimmida();
 
     if(iBordi4 >= THROF4){
@@ -1101,6 +1167,7 @@ $('#velja5').onclick = ()=>{ hljodvel(); syna('leikur3'); byrjaLeik3('vantar'); 
 $('#velja6').onclick = ()=>{ hljodvel(); syna('leikur4'); byrjaLeik4(); };
 $('#tilbakaMerki3').onclick = opnaValmynd;
 $('#tilbakaMerki4').onclick = ()=>{ sogumerki++; opnaValmynd(); };
+$('#sjaAftur').onclick = e=>{ e.currentTarget.blur(); if(saga4) spilaSogu(); };
 $('#tilbakaMerki').onclick  = opnaValmynd;
 $('#tilbakaMerki1').onclick = opnaValmynd;
 $('#storiStafur').parentElement.addEventListener('click', ()=>{ if(rettur2) tala(rettur2.o); });

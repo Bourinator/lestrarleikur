@@ -37,9 +37,11 @@ frádráttinn í stað þess að þurfa að ímynda sér hann.
 
 **6. Hvað gerðist?** — hlutirnir birtast einn og einn á sviðinu, svo gerist eitthvað:
 blöðrur springa 💥, epli eru borðuð 😋, fuglar fljúga burt 💨, stjörnur slokkna ✨ —
-eða fleiri bætast við. Hann telur svo það sem eftir stendur. Hlutirnir sem hverfa
-eru raunverulega fjarlægðir af skjánum, svo hann getur talið svarið beint í stað
-þess að reikna það í huganum.
+eða fleiri bætast við. Hlutirnir sem fara verða gráir og krossaðir út (eins og í
+„Teldu hlutina") svo frádrátturinn sést áfram, og viðbót kemur í sérmerktan grænan
+hóp með ➕ á milli. Undir sviðinu byggist dæmið upp jafnóðum (`3 + 2 = ?`) svo hann
+tengi söguna við plús og mínus, og 🔁 „Sjá aftur" takki endursýnir söguna ef hann
+missti af henni.
 
 Allir fjórir byrja með tölur upp að 5. Eftir 8 rétt svör hækkar þakið í 10, svo 15
 og loks 20, og tölutökkunum fjölgar samhliða. Rangt svar gefur vísbendingu
