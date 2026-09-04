@@ -3,7 +3,7 @@
      svo einingar úr ólíkum útgáfum blandist aldrei saman.
    - Aðeins GET-beiðnir af sama uppruna eru meðhöndlaðar; letur og teljari fara beint á netið.
    - Ný útgáfa: hækka UTGAFA hér (og halda SKRAR í samræmi við skrárnar í repo-inu). */
-const UTGAFA = 'v2.0.0';
+const UTGAFA = 'v2.0.1';
 const SKYNDIMINNI = 'stafaleikur-' + UTGAFA;
 const SKRAR = [
   './', './index.html', './manifest.webmanifest', './404.html',

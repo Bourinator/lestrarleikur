@@ -34,7 +34,7 @@ export function keyraBord(bord, { rot, leikur, gogn, vidLok, vidHeim }) {
 
   let umferd = 0, rettAlls = 0, mistokAlls = 0, mistokUmferd = 0, mistokSkref = 0, rangarUmferdir = 0;
   let laest = false, virk = true, hle = false, lyklaFn = null, umferdSkil = null, svarNu = null, umferdMerki = null;
-  let hleTimer1 = null, hleTimer2 = null, naestaTimer = null;
+  let hleTimer1 = null, hleTimer2 = null, naestaTimer = null, hreinsaStytta = null;
   let byrjadi = Date.now(), hleByrjadi = 0;
   /* hraðaborð: einhalla klukka, stoppar í hléi, þegar flipinn er falinn og á milli umferða */
   let eftirMs = (bord.timi || 0) * 1000, sidastaTikk = 0, timiTimer = null, klukkaStopp = false;
@@ -204,6 +204,7 @@ export function keyraBord(bord, { rot, leikur, gogn, vidLok, vidHeim }) {
     document.removeEventListener('keydown', aLykil);
     svaedi.removeEventListener('pointerdown', snerting, true);
     clearInterval(timiTimer); clearTimeout(naestaTimer); stoppaHleTimera();
+    if (hreinsaStytta) { hreinsaStytta(); hreinsaStytta = null; }
     thegja();
     slokkvaUmferd();
     document.querySelectorAll('.hleGluggi').forEach(x => x.remove());
@@ -227,6 +228,9 @@ export function keyraBord(bord, { rot, leikur, gogn, vidLok, vidHeim }) {
 
   function afram() {
     clearTimeout(naestaTimer);
+    /* hlustarinn sem styttir fagnaðarlætin má ALDREI lifa fram í næstu umferð —
+       annars myndi fyrsta snerting barnsins þar hoppa yfir umferðina í kyrrþey */
+    if (hreinsaStytta) { hreinsaStytta(); hreinsaStytta = null; }
     if (!virk) return;
     if (!erHradi && umferd >= throf) lok(); else nyUmferd();
   }
@@ -291,9 +295,10 @@ export function keyraBord(bord, { rot, leikur, gogn, vidLok, vidHeim }) {
         const bidtimi = T(erHradi ? 650 : 1300);
         const byrjadiFagn = Date.now();
         /* smellur á meðan fagnað er styttir biðina (en fyrstu 500 ms eru alltaf sýnd) */
-        const stytta = () => { if (Date.now() - byrjadiFagn > T(500)) { svaedi.removeEventListener('pointerdown', stytta, true); afram(); } };
+        const stytta = () => { if (Date.now() - byrjadiFagn > T(500)) afram(); };   /* afram() fjarlægir hlustarann */
         svaedi.addEventListener('pointerdown', stytta, true);
-        merki.addEventListener('abort', () => svaedi.removeEventListener('pointerdown', stytta, true), { once: true });
+        hreinsaStytta = () => svaedi.removeEventListener('pointerdown', stytta, true);
+        merki.addEventListener('abort', () => { if (hreinsaStytta) { hreinsaStytta(); hreinsaStytta = null; } }, { once: true });
         naestaTimer = setTimeout(afram, bidtimi);
       },
       rangt({ texti, stafur, takki } = {}) {
